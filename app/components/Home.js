@@ -8,21 +8,26 @@ var Home = React.createClass({
     return (
       <div className='main-container'>
         <h1>This is Home</h1>
-        <Link to='/gallery'>
-          <div type='button'>Gallery1</div>
-        </Link>
-        <Link to='/gallery2'>
-          <div type='button'>Gallery2</div>
-        </Link>
-        <Link to='/gallery3'>
-          <div type='button'>Gallery3</div>
-        </Link>
-        <Link to='/gallery4'>
-          <div type='button'>Gallery4</div>
-        </Link>
-        <Link to='/gallery5'>
-          <div type='button'>Gallery5</div>
-        </Link>
+        <div className='galleries'>
+          <Link to='/gallery'>
+            <div type='button'>Gallery1</div>
+          </Link>
+          <Link to='/gallery2'>
+            <div type='button'>Gallery2</div>
+          </Link>
+          <Link to='/gallery3'>
+            <div type='button'>Gallery3</div>
+          </Link>
+          <Link to='/gallery4'>
+            <div type='button'>Gallery4</div>
+          </Link>
+          <Link to='/gallery5'>
+            <div type='button'>Gallery5</div>
+          </Link>
+          <Link to='/gallery6'>
+            <div type='button'>Gallery6</div>
+          </Link>
+        </div>
       </div>
     )
   }

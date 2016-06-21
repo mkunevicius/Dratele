@@ -1,4 +1,5 @@
 var React = require('react');
+var GallryOpen = require('../components/GalleryOpen');
 
 var Gallery = React.createClass({
   render: function() {
@@ -12,7 +13,7 @@ var Gallery = React.createClass({
         <div>Image5</div>
         <div>Image6</div>
         <div>Image8</div>
-        <div>Image9</div>
+      <div>Image9</div>
       </div>
     )
   }

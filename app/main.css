@@ -1,3 +1,5 @@
+/*--------------------------------------- TRANSITIONS */
+
 .appear-enter {
   transition-duration: .7s;
   transition-property: opacity;
@@ -11,4 +13,31 @@
 
 .appear-leave {
   opacity: 0;
+}
+
+/*--------------------------------------- MAIN STYLES */
+
+body {
+  background-color: #222;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navigation div {
+  margin: 0 20px;
+}
+
+
+.galleries {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.galleries div {
+  padding: 100px;
+  margin: 20px;
+  border: 1px solid #666;
 }
