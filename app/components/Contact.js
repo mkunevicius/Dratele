@@ -5,7 +5,10 @@ var Contact = React.createClass({
 
   render: function() {
     return (
-      <div />
+      <div>
+        <h1>This is {this.props.route.header}</h1>
+        <p>Some contact text and links</p>
+      </div>
     );
   }
 
