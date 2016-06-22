@@ -1,36 +1,49 @@
-var React = require('react');
+import React, {Component, PropTypes} from 'react';
+import {getFetchConfig} from '../utils/helperFunctions'
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 // var MainContainer = require('./MainContainer');
 
-var Home = React.createClass({
-  render: function() {
+export default class Home extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      categories:[],
+    }
+  }
+
+  componentDidMount() {
+
+    fetch('/api/categories', getFetchConfig(null, 'GET'))
+      .then((response) => {
+        if (!response.ok) return Promise.reject(response.statusText)
+        return response.json()
+      })
+      .then(data => {
+        this.setState({
+          categories: data,
+        })
+      })
+
+  }
+
+
+  render() {
     return (
       <div className='main-container'>
         <h1>This is Home</h1>
-        <div className='galleries'>
-          <Link to='/gallery'>
-            <div type='button'>Gallery1</div>
-          </Link>
-          <Link to='/gallery2'>
-            <div type='button'>Gallery2</div>
-          </Link>
-          <Link to='/gallery3'>
-            <div type='button'>Gallery3</div>
-          </Link>
-          <Link to='/gallery4'>
-            <div type='button'>Gallery4</div>
-          </Link>
-          <Link to='/gallery5'>
-            <div type='button'>Gallery5</div>
-          </Link>
-          <Link to='/gallery6'>
-            <div type='button'>Gallery6</div>
-          </Link>
+      <div className='galleries'>
+
+      {this.state.categories.map(cat =>
+        <Link to={`/gallery/${cat.name}`}>
+          <div type='button'>{cat.name}</div>
+        </Link>
+      )}
+
         </div>
       </div>
     )
   }
-});
 
-module.exports = Home;
+}

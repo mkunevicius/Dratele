@@ -17,8 +17,13 @@
 
 /*--------------------------------------- MAIN STYLES */
 
+
 body {
-  background-color: #222;
+  color: #666;
+  background: #222 url('../img/bg.jpg') center;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
 }
 
 .navigation {
@@ -38,6 +43,6 @@ body {
 
 .galleries div {
   padding: 100px;
-  margin: 20px;
+  margin: 10px;
   border: 1px solid #666;
 }
