@@ -1,23 +1,28 @@
-var React = require('react');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-require('../main.css');
-var Navigation = require('../components/Navigation');
+import React, {Component} from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import '../main.css'
+import Navigation from '../components/Navigation'
 
-var Main = React.createClass({
-  render: function() {
+class Main extends Component {
+  render() {
     return (
+
       <div className='main-container'>
+
         This is Main
         <Navigation />
+
         <ReactCSSTransitionGroup
           transitionName="appear"
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500}>
           {React.cloneElement(this.props.children, {key:this.props.location.pathname})}
         </ReactCSSTransitionGroup>
+
       </div>
+
     )
   }
-});
+}
 
-module.exports = Main;
+export default Main

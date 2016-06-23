@@ -1,22 +1,25 @@
-var React = require('react');
-var GallryOpen = require('../components/GalleryOpen');
+import React from 'react'
+import GallryOpen from '../components/GalleryOpen'
 
-var Gallery = React.createClass({
-  render: function() {
+class Gallery extends React.Component {
 
+  render() {
     console.log('this.props', this.props)
 
     return (
       <div>
         This is Gallery:
-
-        {this.props.images.map((image, i) =>
-          <div key={i}><img src={`/${image.imagePath}`} />{image.imagePath}</div>
-        )}
-
+        <div className='galleries'>
+          {this.props.images.map((image, i) =>
+            <div key={i}>
+              <img className='image' src={`/${image.imagePath}`} />
+            </div>
+          )}
+        </div>
       </div>
     )
-  }
-});
 
-module.exports = Gallery;
+  }
+}
+
+export default Gallery

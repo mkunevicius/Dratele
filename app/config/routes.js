@@ -1,16 +1,11 @@
-var React = require('react');
-import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
-// var ReactRouter = require('react-router');
-// var Router = ReactRouter.Router;
-// var Route = ReactRouter.Route;
-// var IndexRoute = ReactRouter.IndexRoute;
-// var hashHistory = ReactRouter.hashHistory;
-var Main = require('../components/Main');
-import Home from '../components/Home';
-import galleryContainer from '../containers/galleryContainer';
-var About = require('../components/About');
-var Contact = require('../components/Contact');
-var Login = require('../components/Login');
+import React from 'react'
+import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+import Main from '../components/Main'
+import Home from '../components/Home'
+import galleryContainer from '../containers/galleryContainer'
+import About from'../components/About'
+import Contact from '../components/Contact'
+import Login from '../components/Login'
 
 var routes = (
   <Router history={browserHistory}>
@@ -24,4 +19,4 @@ var routes = (
   </Router>
 );
 
-module.exports = routes;
+export default routes

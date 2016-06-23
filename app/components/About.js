@@ -1,17 +1,16 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+import React, {Component} from 'react'
 
-var About = React.createClass({
+class About extends Component {
 
-  render: function() {
+  render() {
     return (
       <div>
         <h1>This is {this.props.route.header}</h1>
       <p>Some about text goes here</p>
       </div>
-    );
+    )
   }
 
-});
+}
 
-module.exports = About;
+export default About

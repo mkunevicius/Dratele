@@ -1,9 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {getFetchConfig} from '../utils/helperFunctions'
+import Gallery from '../components/Gallery'
 
-var Gallery = require('../components/Gallery');
-
-export default class galleryContainer extends Component {
+class galleryContainer extends React.Component {
 
   constructor() {
     super()
@@ -36,7 +35,7 @@ export default class galleryContainer extends Component {
 
     return (
       <div>
-        This is {this.props.route.header}
+        <h1>{catName}</h1>
         <div>
           <Gallery images={filteredImages} />
         </div>
@@ -45,3 +44,5 @@ export default class galleryContainer extends Component {
   }
 
 }
+
+export default galleryContainer

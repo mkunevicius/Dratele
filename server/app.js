@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var multer = require('multer');
 
-
 var app = express();
 
 var connection = mysql.createConnection({
@@ -15,8 +14,20 @@ var connection = mysql.createConnection({
   password : 'root'
 });
 
-// Use ADS database
+// Use 'Dratele' database
 connection.query('USE Dratele');
+
+// For file uploading with multer
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, __dirname + '/public/projects/');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  }
+});
+
+var upload = multer({ storage : storage });
 
 // Static server
 app.use(express.static(__dirname + '/public'));
@@ -37,45 +48,17 @@ app.listen(3000, function(){
 	console.log("The frontend server is running on port 3000...");
 });
 
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, __dirname + '/public/projects/');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.originalname);
-  }
-});
-
-var upload = multer({ storage : storage });
-
-
 // API projectlist route
 app.get('/api/images', function(req, res){
-  var queryAllProjects = 'SELECT * FROM images JOIN categories ON images.categoryId = categories.id';
-  connection.query(queryAllProjects, function(err, rows){
+  var queryAllImages = 'SELECT * FROM images JOIN categories ON images.categoryId = categories.id';
+  connection.query(queryAllImages, function(err, rows){
     res.send(rows);
   });
 });
 
 app.get('/api/categories', function(req, res){
-  var queryAllProjects = 'SELECT * FROM categories';
-  connection.query(queryAllProjects, function(err, rows){
+  var queryAllCats = 'SELECT * FROM categories';
+  connection.query(queryAllCats, function(err, rows){
     res.send(rows);
   });
 });
-
-
-function getAllImages(res) {
-  var queryAllProjects = 'SELECT * FROM images';
-  connection.query(queryAllProjects, function(err, rows){
-    return {images : rows};
-  });
-}
-
-function getCategories(){
-  var result;
-  connection.query('SELECT * FROM categories', function(err, rows){
-    result = rows;
-  });
-  return result;
-}

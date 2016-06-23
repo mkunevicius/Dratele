@@ -1,10 +1,10 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+import React, {Component, PropTypes} from 'react'
 
-var Login = React.createClass({
+class Login extends Component {
 
-  render: function() {
+  render() {
     return (
+
       <div>
         <h1>This is {this.props.route.header}</h1>
         <form>
@@ -13,9 +13,10 @@ var Login = React.createClass({
           <button type="submit">Login</button>
         </form>
       </div>
-    );
+
+    )
   }
 
-});
+}
 
-module.exports = Login;
+export default Login

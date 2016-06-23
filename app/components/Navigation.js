@@ -1,13 +1,11 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
+import React, {Component} from 'react'
+import ReactRouter, {Link} from 'react-router'
 
-var Navigation = React.createClass({
-
-  render: function() {
+class Navigation extends Component {
+  render() {
     return (
+
       <div className='navigation'>
-        This is Navigation:
         <Link to='/'>
           <div type='button'>Home</div>
         </Link>
@@ -18,9 +16,9 @@ var Navigation = React.createClass({
           <div type='button'>Contact</div>
         </Link>
       </div>
-    );
+
+    )
   }
+}
 
-});
-
-module.exports = Navigation;
+export default Navigation

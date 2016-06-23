@@ -1,10 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react'
 import {getFetchConfig} from '../utils/helperFunctions'
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
-// var MainContainer = require('./MainContainer');
+import ReactRouter, {Link} from 'react-router'
 
-export default class Home extends Component {
+class Home extends Component {
 
   constructor() {
     super()
@@ -25,25 +23,23 @@ export default class Home extends Component {
           categories: data,
         })
       })
-
   }
-
 
   render() {
     return (
       <div className='main-container'>
         <h1>This is Home</h1>
-      <div className='galleries'>
-
-      {this.state.categories.map(cat =>
-        <Link to={`/gallery/${cat.name}`}>
-          <div type='button'>{cat.name}</div>
-        </Link>
-      )}
-
+        <div className='galleries'>
+          {this.state.categories.map(cat =>
+            <Link to={`/gallery/${cat.name}`}>
+              <div type='button'>{cat.name}</div>
+            </Link>
+          )}
         </div>
       </div>
     )
   }
 
 }
+
+export default Home

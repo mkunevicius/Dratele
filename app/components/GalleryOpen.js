@@ -1,9 +1,10 @@
-var React = require('react');
-var Lightbox = require('react-images');
+import React, {Component} from 'react'
+import Lightbox from 'react-images'
 
-var Gallery = React.createClass({
-  render: function() {
+class Gallery extends Component {
+  render() {
     return (
+
       <Lightbox
         images={[
           { src: '../img/01.jpg' },
@@ -15,8 +16,9 @@ var Gallery = React.createClass({
         onClickNext={this.gotoNext}
         onClose={this.closeLightbox}
       />
+    
     )
   }
-});
+}
 
-module.exports = Gallery;
+export default Gallery
