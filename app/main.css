@@ -35,7 +35,6 @@ body {
   margin: 0 20px;
 }
 
-
 .galleries {
   display: flex;
   flex-wrap: wrap;
@@ -43,8 +42,6 @@ body {
 }
 
 .galleries div {
-  height: 220px;
-  width: 350;
   margin: 10px;
   background-color: #666;
 }
@@ -52,4 +49,8 @@ body {
 .image {
   height: 220px;
   width: auto;
+}
+
+h1 {
+  margin-top: 2em;
 }

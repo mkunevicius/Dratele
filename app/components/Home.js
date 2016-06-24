@@ -30,8 +30,8 @@ class Home extends Component {
       <div className='main-container'>
         <h1>This is Home</h1>
         <div className='galleries'>
-          {this.state.categories.map(cat =>
-            <Link to={`/gallery/${cat.name}`}>
+          {this.state.categories.map((cat, i) =>
+            <Link key={i} to={`/gallery/${cat.name}`}>
               <div type='button'>{cat.name}</div>
             </Link>
           )}
