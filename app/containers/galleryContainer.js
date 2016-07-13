@@ -35,10 +35,7 @@ class galleryContainer extends React.Component {
 
     return (
       <div>
-        <h1>{catName}</h1>
-        <div>
-          <Gallery images={filteredImages} />
-        </div>
+        <Gallery images={filteredImages} />
       </div>
     );
   }

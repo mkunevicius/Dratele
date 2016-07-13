@@ -20,7 +20,7 @@
 
 body {
   color: #666;
-  background: #222 url('../img/bg.jpg') center;
+  background: #222 url('../img/bg1.jpg') center;
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
@@ -35,20 +35,13 @@ body {
   margin: 0 20px;
 }
 
-.galleries {
-  width: 20000px;
-  /*background: rgba(255, 255, 255, 0.25);*/
-  /*box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);*/
-}
-
 .categories {
   display: flex;
   justify-content: flex-start;
 }
 
 .categories div {
-  margin: 0 20px;
-  /*color: #ccc;*/
+  margin: 2vw;
 }
 
 .active {
@@ -59,7 +52,7 @@ body {
   color: #ccc;
 }
 
-/*.imageContainer {
+.imageContainer {
   display: inline-block;
   height: 40vw;
   width: auto;
@@ -68,9 +61,9 @@ body {
 .image {
   width: auto;
   height: 100%;
-  margin-left: 1vw;
-}*/
+  margin-left: 2vw;
+}
 
 h1 {
-  margin-top: 2em;
+  margin-left: 2vw;
 }

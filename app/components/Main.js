@@ -11,7 +11,7 @@ class Main extends Component {
       <div className='main-container'>
 
         <Navigation />
-        
+        <h1>Dratele Photohraphy</h1>
         <Categories />
 
         <ReactCSSTransitionGroup
