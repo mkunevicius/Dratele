@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import '../main.css'
 import Navigation from '../components/Navigation'
+import Categories from '../components/Categories'
 
 class Main extends Component {
   render() {
@@ -9,8 +10,9 @@ class Main extends Component {
 
       <div className='main-container'>
 
-        This is Main
         <Navigation />
+        
+        <Categories />
 
         <ReactCSSTransitionGroup
           transitionName="appear"

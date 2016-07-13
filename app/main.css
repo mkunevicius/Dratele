@@ -36,20 +36,40 @@ body {
 }
 
 .galleries {
+  width: 20000px;
+  /*background: rgba(255, 255, 255, 0.25);*/
+  /*box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);*/
+}
+
+.categories {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start;
 }
 
-.galleries div {
-  margin: 10px;
-  background-color: #666;
+.categories div {
+  margin: 0 20px;
+  /*color: #ccc;*/
+}
+
+.active {
+  color: #666;
+}
+
+.hover {
+  color: #ccc;
+}
+
+/*.imageContainer {
+  display: inline-block;
+  height: 40vw;
+  width: auto;
 }
 
 .image {
-  height: 220px;
   width: auto;
-}
+  height: 100%;
+  margin-left: 1vw;
+}*/
 
 h1 {
   margin-top: 2em;

@@ -1,39 +1,21 @@
-import React from 'react'
-// import Lightbox from 'react-images'
+import React, { Component } from 'react'
+import HorizontalScroll from 'react-scroll-horizontal'
 
-class Gallery extends React.Component {
-
+class Gallery extends Component {
   render() {
-    console.log('this.props:', this.props)
+    const child = { width: `300em`, height: `100%` }
     return (
       <div>
-        This is Gallery:
-        <div className='galleries'>
-
+        <HorizontalScroll>
           {this.props.images.map((image, i) =>
-            <div key={i}>
+            <div style={child} className='imageContainer' key={i}>
               <img className='image' src={`/${image.imagePath}`} />
             </div>
           )}
-
-        </div>
+        </HorizontalScroll>
       </div>
     )
   }
-
 }
 
 export default Gallery
-
-
-
-// {console.log('this.props:', this.props.images[i].imagePath)}
-
-{/*<Lightbox
-  images={[
-    { src: '../' + this.props.images[i].imagePath }
-  ]}
-  isOpen={this.state.lightboxIsOpen}
-  onClickPrev={this.gotoPrevious}
-  onClickNext={this.gotoNext}
-  onClose={this.closeLightbox}/>*/}

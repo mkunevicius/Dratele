@@ -48,7 +48,7 @@ app.listen(3000, function(){
 	console.log("The frontend server is running on port 3000...");
 });
 
-// API projectlist route
+// All images route
 app.get('/api/images', function(req, res){
   var queryAllImages = 'SELECT * FROM images JOIN categories ON images.categoryId = categories.id';
   connection.query(queryAllImages, function(err, rows){
@@ -56,6 +56,7 @@ app.get('/api/images', function(req, res){
   });
 });
 
+// Get categories route
 app.get('/api/categories', function(req, res){
   var queryAllCats = 'SELECT * FROM categories';
   connection.query(queryAllCats, function(err, rows){
