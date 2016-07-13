@@ -40,14 +40,14 @@ class Categories extends Component {
 
   render() {
 
-    let classes = classnames('leftMenu', {
+    let classes = classnames({
       active: this.state.active,
       hover: this.state.hover
     });
 
     return (
       <div className='main-container'>
-        <span className='categories'>
+        <div className='categories'>
           {this.state.categories.map((cat, i) =>
             <Link key={i} to={`/gallery/${cat.name}`}>
               <div
@@ -60,8 +60,8 @@ class Categories extends Component {
               </div>
             </Link>
           )}
-        </span>
-        <span className='navigation'>
+        </div>
+        <div className='navigation'>
           <Link to='/'>
             <div type='button'>Home</div>
           </Link>
@@ -71,7 +71,7 @@ class Categories extends Component {
           <Link to='/contact'>
             <div type='button'>Contact</div>
           </Link>
-        </span>
+        </div>
       </div>
     );
   }

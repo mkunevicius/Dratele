@@ -9,7 +9,7 @@ class Main extends Component {
     return (
 
       <div className='main-container'>
-        <h1>Dratele Photohraphy</h1>
+        <h1>DRATELE PHOTOGRAPHY</h1>
         <Categories />
 
         <ReactCSSTransitionGroup

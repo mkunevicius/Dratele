@@ -17,26 +17,31 @@
 
 /*--------------------------------------- MAIN STYLES */
 
-
 body {
   color: #666;
-  background: #222 url('../img/bg1.jpg') center;
+  background: #222 url('../img/bg2.jpg');
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
 }
 
 .navigation {
-  width: 40%;
+  position: fixed;
+  margin-top: 100px;
+  width: 30%;
+  right: 0;
   display: inline-flex;
   justify-content: flex-end;
 }
 
 .navigation div {
   margin: 2vw;
+  color: #aaa;
 }
 
 .categories {
+  position: fixed;
+  margin-top: 100px;
   width: 60%;
   display: inline-flex;
   justify-content: flex-start;
@@ -47,7 +52,7 @@ body {
 }
 
 .active {
-  color: #666;
+  color: #aaa;
 }
 
 .hover {
@@ -64,8 +69,17 @@ body {
   width: auto;
   height: 100%;
   margin-left: 2vw;
+  border: 1px solid #ccc;
 }
 
 h1 {
+  position: fixed;
+  font-family: 'Poiret One', cursive;
   margin: 2vw;
+  color: #aaa;
+}
+
+.scroll {
+  margin-top: 200px;
+  position: fixed;
 }

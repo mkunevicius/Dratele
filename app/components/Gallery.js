@@ -3,9 +3,9 @@ import HorizontalScroll from 'react-scroll-horizontal'
 
 class Gallery extends Component {
   render() {
-    const visible = { overflow: `visible`, margin: `0 20vw 0 0` }
+    const visible = { margin: `0 -80vw 0 0` }
     return (
-      <div>
+      <div className='scroll'>
         <HorizontalScroll
           //reverseScroll={true}
           style={visible}
