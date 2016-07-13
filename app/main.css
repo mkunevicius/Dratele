@@ -27,16 +27,18 @@ body {
 }
 
 .navigation {
-  display: flex;
+  width: 40%;
+  display: inline-flex;
   justify-content: flex-end;
 }
 
 .navigation div {
-  margin: 0 20px;
+  margin: 2vw;
 }
 
 .categories {
-  display: flex;
+  width: 60%;
+  display: inline-flex;
   justify-content: flex-start;
 }
 
@@ -65,5 +67,5 @@ body {
 }
 
 h1 {
-  margin-left: 2vw;
+  margin: 2vw;
 }

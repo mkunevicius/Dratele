@@ -7,7 +7,7 @@ class Gallery extends Component {
     return (
       <div>
         <HorizontalScroll
-          reverseScroll={true}
+          //reverseScroll={true}
           style={visible}
           >
           {this.props.images.map((image, i) =>

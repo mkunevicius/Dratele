@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import '../main.css'
-import Navigation from '../components/Navigation'
+// import Navigation from '../components/Navigation'
 import Categories from '../components/Categories'
 
 class Main extends Component {
@@ -9,8 +9,6 @@ class Main extends Component {
     return (
 
       <div className='main-container'>
-
-        <Navigation />
         <h1>Dratele Photohraphy</h1>
         <Categories />
 
