@@ -4,7 +4,7 @@ import HorizontalScroll from 'react-scroll-horizontal'
 class Gallery extends Component {
   render() {
     return (
-      <div className='scroll'>
+      <div className='scrollContainer'>
         <HorizontalScroll
           reverseScroll={true}
           >

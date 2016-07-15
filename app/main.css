@@ -68,6 +68,10 @@ body {
   width: auto;
 }
 
+.imageContainer:last-child {
+  margin-right: 20vw;
+}
+
 .image {
   width: auto;
   height: 100%;
@@ -81,14 +85,14 @@ h1 {
   color: #aaa;
 }
 
-.scroll {
+.scrollContainer {
   margin-top: 200px;
   position: fixed;
 }
 
 .scroll-horizontal {
   overflow: visible !important;
-  margin: 0 -80vw 0 0 !important;
+  position: fixed !important;
 }
 
 .about, .contact {
