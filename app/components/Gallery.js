@@ -3,12 +3,10 @@ import HorizontalScroll from 'react-scroll-horizontal'
 
 class Gallery extends Component {
   render() {
-    const visible = { margin: `0 -80vw 0 0` }
     return (
       <div className='scroll'>
         <HorizontalScroll
-          //reverseScroll={true}
-          style={visible}
+          reverseScroll={true}
           >
           {this.props.images.map((image, i) =>
             <div className='imageContainer' key={i}>

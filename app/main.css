@@ -23,6 +23,7 @@ body {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+  font-family: 'Poiret One', cursive;
 }
 
 .navigation {
@@ -37,18 +38,20 @@ body {
 .navigation div {
   margin: 2vw;
   color: #aaa;
+  font-size: 1vw;
 }
 
 .categories {
   position: fixed;
   margin-top: 100px;
-  width: 60%;
+  width: 70%;
   display: inline-flex;
   justify-content: flex-start;
 }
 
 .categories div {
   margin: 2vw;
+  font-size: 1vw;
 }
 
 .active {
@@ -61,7 +64,7 @@ body {
 
 .imageContainer {
   display: inline-block;
-  height: 40vw;
+  height: 42vw;
   width: auto;
 }
 
@@ -69,12 +72,11 @@ body {
   width: auto;
   height: 100%;
   margin-left: 2vw;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
 }
 
 h1 {
   position: fixed;
-  font-family: 'Poiret One', cursive;
   margin: 2vw;
   color: #aaa;
 }
@@ -82,4 +84,51 @@ h1 {
 .scroll {
   margin-top: 200px;
   position: fixed;
+}
+
+.scroll-horizontal {
+  overflow: visible !important;
+  margin: 0 -80vw 0 0 !important;
+}
+
+.about, .contact {
+  position: fixed;
+  margin: 20% 45%;
+  width: 500px;
+}
+
+.about p, .contact p {
+  margin: 100px auto;
+}
+
+@media screen and (max-width: 777px) and (orientation:landscape) {
+
+  .navigation, .categories {
+    margin-top: 55px;
+  }
+
+  .navigation div, .categories div {
+    font-size: 1.5vw;
+  }
+
+  .scroll {
+    margin-top: 95px;
+  }
+
+  .imageContainer {
+    height: 38vw;
+  }
+
+}
+
+@media screen and (max-width: 450px) and (orientation:portrait) {
+
+  .navigation div, .categories div {
+    font-size: 2vw;
+  }
+
+  .imageContainer {
+    height: 50vw;
+  }
+
 }

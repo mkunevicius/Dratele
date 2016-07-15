@@ -42,7 +42,8 @@ class Categories extends Component {
 
     let classes = classnames({
       active: this.state.active,
-      hover: this.state.hover
+      hover: this.state.hover,
+
     });
 
     return (

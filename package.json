@@ -25,11 +25,10 @@
     "react-addons-css-transition-group": "^15.2.1",
     "react-classset": "0.0.2",
     "react-dom": "^15.2.1",
-    "react-horizontal-scroll": "^4.0.1",
     "react-images": "^0.4.6",
     "react-motion": "^0.4.4",
     "react-router": "^2.5.2",
-    "react-scroll-horizontal": "0.0.5",
+    "react-scroll-horizontal": "0.0.7",
     "sass-loader": "^3.2.3",
     "webpack-hot-middleware": "^2.12.1"
   },
