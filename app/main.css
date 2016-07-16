@@ -26,6 +26,11 @@ body {
   font-family: 'Poiret One', cursive;
 }
 
+a {
+  text-decoration: none;
+  color: #aaa;
+}
+
 .navigation {
   position: fixed;
   margin-top: 100px;
@@ -35,9 +40,9 @@ body {
   justify-content: flex-end;
 }
 
-.navigation div {
+.navigation div,
+.categories div {
   margin: 2vw;
-  color: #aaa;
   font-size: 1vw;
 }
 
@@ -49,22 +54,17 @@ body {
   justify-content: flex-start;
 }
 
-.categories div {
-  margin: 2vw;
-  font-size: 1vw;
-}
-
 .active {
-  color: #aaa;
+  color: #eee;
 }
 
 .hover {
-  color: #ccc;
+  color: #eee;
 }
 
 .imageContainer {
   display: inline-block;
-  height: 42vw;
+  height: 40vw;
   width: auto;
 }
 
@@ -83,6 +83,7 @@ h1 {
   position: fixed;
   margin: 2vw;
   color: #aaa;
+  font-size: 2.5em;
 }
 
 .scrollContainer {
@@ -95,15 +96,28 @@ h1 {
   position: fixed !important;
 }
 
-.about, .contact {
+.about, .contact, .login {
   position: fixed;
-  margin: 20% 45%;
+  margin: 17% 45%;
   width: 500px;
 }
 
-.about p, .contact p {
+.about p, .contact p, .login form {
   margin: 100px auto;
 }
+
+.login form input,
+.login form button {
+  padding: 5px;
+  margin: 5px;
+  display: block;
+}
+
+.admin {
+  position: fixed;
+  margin-top: 100px;
+}
+
 
 @media screen and (max-width: 777px) and (orientation:landscape) {
 

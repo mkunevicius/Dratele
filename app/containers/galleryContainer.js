@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react'
-import {getFetchConfig} from '../utils/helperFunctions'
+import React, { Component, PropTypes } from 'react'
+import { getFetchConfig } from '../utils/helperFunctions'
 import Gallery from '../components/Gallery'
+
 
 class galleryContainer extends React.Component {
 
@@ -28,11 +29,14 @@ class galleryContainer extends React.Component {
 
   render() {
     let catName = this.props.params.name
-
     let filteredImages = this.state.images.filter(image =>
       image.name === catName
     )
-
+    // While Loading...
+    if (!this.state.images) {
+      return <div className='loading'>Loading...</div>
+    }
+    // Return gallery
     return (
       <div>
         <Gallery images={filteredImages} />

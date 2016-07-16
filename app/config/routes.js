@@ -6,6 +6,7 @@ import galleryContainer from '../containers/galleryContainer'
 import About from'../components/About'
 import Contact from '../components/Contact'
 import Login from '../components/Login'
+import Admin from '../components/Admin'
 
 var routes = (
   <Router history={browserHistory}>
@@ -14,8 +15,9 @@ var routes = (
       <Route path='gallery/:name' header="Gallery Container" component={galleryContainer} />
       <Route path='about' header="About" component={About} />
       <Route path='contact' header="Contact" component={Contact} />
-    <Route path='login' header="Login" component={Login} />
+      <Route path='login' header="Login" component={Login} />
     </Route>
+    <Route path='api' component={Admin} />
   </Router>
 );
 

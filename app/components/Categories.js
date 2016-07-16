@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {getFetchConfig} from '../utils/helperFunctions';
 import ReactRouter, {Link} from 'react-router';
-import classnames from 'classnames'
+import classnames from 'classnames';
 
 class Categories extends Component {
 
@@ -10,7 +10,7 @@ class Categories extends Component {
     this.state = {
       categories: [],
       active: false,
-      hover: false
+      hover: false,
     };
   }
 
@@ -42,8 +42,7 @@ class Categories extends Component {
 
     let classes = classnames({
       active: this.state.active,
-      hover: this.state.hover,
-
+      hover: this.state.hover
     });
 
     return (
@@ -64,19 +63,30 @@ class Categories extends Component {
         </div>
         <div className='navigation'>
           <Link to='/'>
-            <div type='button'>Home</div>
+            <div
+              className={classes}
+              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
+              onMouseOut={this.handleMouseOut.bind(this)}
+              type='button'>Home</div>
           </Link>
           <Link to='/about'>
-            <div type='button'>About</div>
+            <div
+              className={classes}
+              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
+              onMouseOut={this.handleMouseOut.bind(this)}
+              type='button'>About</div>
           </Link>
           <Link to='/contact'>
-            <div type='button'>Contact</div>
+            <div
+              className={classes}
+              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
+              onMouseOut={this.handleMouseOut.bind(this)}
+              type='button'>Contact</div>
           </Link>
         </div>
       </div>
     );
   }
-
 }
 
 export default Categories
