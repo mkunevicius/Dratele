@@ -17,7 +17,7 @@ var routes = (
       <Route path='contact' header="Contact" component={Contact} />
       <Route path='login' header="Login" component={Login} />
     </Route>
-    <Route path='api' component={Admin} />
+    <Route path='admin' component={Admin} />
   </Router>
 );
 

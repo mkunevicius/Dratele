@@ -4,18 +4,29 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var multer = require('multer');
+var knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host     : 'localhost',
+    port     : '8889',
+    user     : 'root',
+    password : 'root',
+    database : 'Dratele'
+  }
+});
 
 var app = express();
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-	port		 : '8889',
-  user     : 'root',
-  password : 'root'
-});
-
-// Use 'Dratele' database
-connection.query('USE Dratele');
+//
+// var connection = mysql.createConnection({
+//   host     : 'localhost',
+// 	port		 : '8889',
+//   user     : 'root',
+//   password : 'root'
+// });
+//
+// //Use 'Dratele' database
+// connection.query('USE Dratele');
 
 // For file uploading with multer
 var storage = multer.diskStorage({
@@ -48,29 +59,105 @@ app.listen(3000, function(){
 	console.log("The frontend server is running on port 3000...");
 });
 
-// All images route
+// All images in categories route
 app.get('/api/images', function(req, res){
-  var queryAllImages = 'SELECT * FROM images JOIN categories ON images.categoryId = categories.id';
-  connection.query(queryAllImages, function(err, rows){
-    res.send(rows);
-  });
+  knex('images')
+  .join('categories', 'images.categoryId', '=', 'categories.id')
+  .select()
+  .then(data => {
+    res.send(data);
+  })
 });
 
 // All categories route
 app.get('/api/categories', function(req, res){
-  var queryAllCats = 'SELECT * FROM categories';
-  connection.query(queryAllCats, function(err, rows){
-    res.send(rows);
-  });
+  knex('categories')
+  .select()
+  .then(data => {
+    res.send(data);
+  })
 });
 
 // About text route
 app.get('/api/about', function(req, res){
-  var queryAbout = 'SELECT text FROM about';
-  connection.query(queryAbout, function(err, rows){
-    res.send(rows);
-  });
+  knex('about')
+  .where('id', '=', 1)
+  .first('text')
+  .then(data => {
+    console.log(data)
+      res.send(data);
+  })
 });
+
+// All data route
+app.get('/api/data', function(req, res){
+
+  var result = {}
+
+  knex('categories')
+  .then(categories => {
+    result.categories = categories
+
+    knex('images')
+    .then(images => {
+      result.images = images
+
+      knex('about').where('id', 1).first('text')
+      .then(about => {
+
+        result.about = about
+        res.send(result)
+
+      })
+
+
+    })
+
+  })
+
+
+  // knex('categories')
+  // .then(categories => {
+  //
+  //     var result = []
+  //     var promises = []
+  //
+  //     categories.forEach(category => {
+  //
+  //       var promise = new Promise((resolve, reject) => {
+  //
+  //         knex('images')
+  //         .where('categoryId', category.id)
+  //         .then(images => {
+  //
+  //           category.images = images
+  //           result.push(category)
+  //           console.log('result', result)
+  //
+  //         })
+  //
+  //         resolve(result)
+  //
+  //       })
+  //
+  //       promises.push(promise)
+  //
+  //     })
+  //
+  //     Promise.all(promises).then(res => {
+  //       console.log('res', res)
+  //     })
+  //
+  //   })
+
+  // promise.then(res => {
+  //   console.log(res)
+  //   //res.send(result);
+  // })
+
+
+});
+
 
 
 // ------------------------------------------------------- ADMIN
@@ -124,7 +211,7 @@ app.get('/images/delete/:imageId', function(req, res){
 
 // Update 'About' text route
 app.post('/api/about', function(req, res){
-  var queryUpdateAbout = 'UPDATE Dratele.about SET text = ?';
+  var queryUpdateAbout = 'UPDATE Dratele.about SET text = ? WHERE id = 1';
   connection.query(queryUpdateAbout, [req.body.about], function(err, rows){
     if (err) throw err;
   });

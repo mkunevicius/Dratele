@@ -21,9 +21,10 @@ class galleryContainer extends React.Component {
       })
       .then(images => {
         this.setState({
-          images: images,
+          images: images
         })
       })
+      .catch(err => console.log('Serv: ', err))
 
   }
 
@@ -32,14 +33,17 @@ class galleryContainer extends React.Component {
     let filteredImages = this.state.images.filter(image =>
       image.name === catName
     )
-    // While Loading...
-    if (!this.state.images) {
-      return <div className='loading'>Loading...</div>
-    }
+
+    //While Loading...
+    // if (this.state.images.length === 0) {
+    //   return <div className='loading'>Loading...</div>
+    // }
+
     // Return gallery
     return (
       <div>
-        <Gallery images={filteredImages} />
+        {filteredImages.length !== 0 &&
+        <Gallery images={filteredImages} />}
       </div>
     );
   }

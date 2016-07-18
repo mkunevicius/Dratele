@@ -9,19 +9,8 @@ class Categories extends Component {
     super();
     this.state = {
       categories: [],
-      active: false,
-      hover: false,
+      activeItem: window.location.pathname
     };
-  }
-
-  handleClick() {
-    this.setState({ active: true });
-  }
-  handleMouseOver() {
-    this.setState({ hover: true });
-  }
-  handleMouseOut() {
-    this.setState({ hover: false });
   }
 
   componentDidMount() {
@@ -38,50 +27,67 @@ class Categories extends Component {
       })
   }
 
+  handleClick(path) {
+    this.setState({ activeItem: path});
+  }
+
+
   render() {
 
-    let classes = classnames({
-      active: this.state.active,
-      hover: this.state.hover
-    });
+    let homeClasses = classnames('menuItem');
+    let contactClasses = classnames('menuItem');
+    let aboutClasses = classnames('menuItem');
+
+    if (this.state.activeItem === '/')
+      homeClasses = classnames('menuItem', {active: true});
+
+    if (this.state.activeItem === '/about')
+      aboutClasses = classnames('menuItem', {active: true});
+
+    if (this.state.activeItem === '/contact')
+      contactClasses = classnames('menuItem', {active: true});
 
     return (
       <div className='main-container'>
+
         <div className='categories'>
-          {this.state.categories.map((cat, i) =>
-            <Link key={i} to={`/gallery/${cat.name}`}>
-              <div
-                className={classes}
-                onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
-                onMouseOut={this.handleMouseOut.bind(this)}
+
+          {this.state.categories.map((cat, i) => {
+
+            let catClasses = classnames('menuItem', {
+              active: this.state.activeItem === `/gallery/${cat.name}`
+            });
+
+            return <Link key={i} to={`/gallery/${cat.name}`}
+                className={catClasses}
+                onClick={this.handleClick.bind(this, `/gallery/${cat.name}`)}
                 type='button'
                 >
                 {cat.name}
-              </div>
             </Link>
-          )}
+
+          })}
+
         </div>
+
         <div className='navigation'>
-          <Link to='/'>
-            <div
-              className={classes}
-              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
-              onMouseOut={this.handleMouseOut.bind(this)}
-              type='button'>Home</div>
+          <Link to='/'
+              className={homeClasses}
+              onClick={this.handleClick.bind(this, '/')}
+              type='button'>
+              Home
           </Link>
-          <Link to='/about'>
-            <div
-              className={classes}
-              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
-              onMouseOut={this.handleMouseOut.bind(this)}
-              type='button'>About</div>
+          <Link to='/about'
+              className={aboutClasses}
+              onClick={this.handleClick.bind(this, '/about')}
+              type='button'>
+              About
           </Link>
-          <Link to='/contact'>
-            <div
-              className={classes}
-              onClick={this.handleClick.bind(this)} onMouseOver={this.handleMouseOver.bind(this)}
-              onMouseOut={this.handleMouseOut.bind(this)}
-              type='button'>Contact</div>
+          <Link to='/contact'
+            className={contactClasses}
+            onClick={this.handleClick.bind(this, '/contact')}
+            type='button'>
+              Contact
           </Link>
         </div>
       </div>

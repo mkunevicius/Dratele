@@ -3,9 +3,9 @@ import HorizontalScroll from 'react-scroll-horizontal'
 
 class Gallery extends Component {
 
-  // contextMenu(e) {
-  //   e.preventDefault();
-  // }
+  contextMenu(e) {
+    e.preventDefault();
+  }
 
   render() {
     return (
@@ -18,7 +18,7 @@ class Gallery extends Component {
               <img
                 className='image'
                 src={`/${image.imagePath}`}
-                //onContextMenu={this.contextMenu}
+                onContextMenu={this.contextMenu}
                 />
             </div>
           )}
