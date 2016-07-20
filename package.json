@@ -30,6 +30,7 @@
     "react-motion": "^0.4.4",
     "react-router": "^2.5.2",
     "react-scroll-horizontal": "0.0.7",
+    "react-share": "^1.8.4",
     "sass-loader": "^3.2.3",
     "webpack-hot-middleware": "^2.12.1"
   },

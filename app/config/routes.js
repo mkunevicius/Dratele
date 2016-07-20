@@ -7,6 +7,8 @@ import About from'../components/About'
 import Contact from '../components/Contact'
 import Login from '../components/Login'
 import Admin from '../components/Admin'
+import Api from '../components/Api'
+
 
 var routes = (
   <Router history={browserHistory}>
@@ -16,6 +18,7 @@ var routes = (
       <Route path='about' header="About" component={About} />
       <Route path='contact' header="Contact" component={Contact} />
       <Route path='login' header="Login" component={Login} />
+
     </Route>
     <Route path='admin' component={Admin} />
   </Router>

@@ -1,6 +1,6 @@
-/** {
-  border: 1px solid #ccc;
-}*/
+* {
+  /*border: 1px solid #ccc;*/
+}
 
 /*--------------------------------------- TRANSITIONS */
 
@@ -37,22 +37,18 @@ a {
 
 .navigation {
   position: fixed;
-  margin-top: 100px;
+  margin-top: 10px;
+  margin-right: 1%;
   width: 30%;
   right: 0;
   display: inline-flex;
   justify-content: flex-end;
 }
 
-.navigation div,
-.categories div {
-  margin: 2vw;
-  font-size: 1vw;
-}
-
 .categories {
   position: fixed;
-  margin-top: 100px;
+  margin-top: 10px;
+  margin-left: 0.5%;
   width: 70%;
   display: inline-flex;
   justify-content: flex-start;
@@ -90,14 +86,13 @@ a {
 }
 
 h1 {
-  position: fixed;
   margin: 2vw;
   color: #aaa;
   font-size: 2.5em;
 }
 
 .scrollContainer {
-  margin-top: 200px;
+  margin-top: 100px;
   position: fixed;
 }
 
@@ -107,20 +102,39 @@ h1 {
 }
 
 .about, .contact, .login {
-  position: fixed;
-  margin: 20% 45%;
-  width: 500px;
+  width: 30%;
+  margin: 12% auto;
+  text-align: center;
+}
+
+.about h1, .contact h1, .login h1 {
+  display: inline-block;
 }
 
 .about p, .contact p, .login form {
-  margin: 100px auto;
+  margin: 10px auto;
+}
+
+.facebookButton {
+  position: fixed;
+  margin-left: 2vw;
+  margin-top: 48%;
+}
+
+.twitterButton {
+  position: fixed;
+  margin-left: 4vw;
+  margin-top: 48%;
 }
 
 .login form input,
 .login form button {
   padding: 5px;
   margin: 5px;
-  display: block;
+  font-size: .9em;
+  display: inline-block;
+  background-color: #eee;
+  border: none;
 }
 
 .adminLogo {

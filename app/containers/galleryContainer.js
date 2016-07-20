@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { getFetchConfig } from '../utils/helperFunctions'
 import Gallery from '../components/Gallery'
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 class galleryContainer extends React.Component {
 
@@ -39,12 +40,38 @@ class galleryContainer extends React.Component {
     //   return <div className='loading'>Loading...</div>
     // }
 
+    // const {
+    //   FacebookShareButton,
+    //   TwitterShareButton
+    // } = ShareButtons;
+    //
+    // const FacebookIcon = generateShareIcon('facebook');
+    // const TwitterIcon = generateShareIcon('twitter');
+
     // Return gallery
     return (
-      <div>
+      <ReactCSSTransitionGroup
+        transitionName="appear"
+        transitionEnterTimeout={400}
+        transitionLeaveTimeout={400}>
         {filteredImages.length !== 0 &&
         <Gallery images={filteredImages} />}
-      </div>
+      </ReactCSSTransitionGroup>
+
+      // {/*<FacebookShareButton
+      //   url={window.location.pathname}
+      //   title={window.location.pathname}
+      //   className="facebookButton">
+      //   <FacebookIcon size={25} />
+      // </FacebookShareButton>
+      //
+      // <TwitterShareButton
+      //   url={window.location.pathname}
+      //   title={window.location.pathname}
+      //   className="twitterButton">
+      //   <TwitterIcon size={25} />
+      // </TwitterShareButton>*/}
+
     );
   }
 

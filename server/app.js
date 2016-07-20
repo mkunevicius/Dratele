@@ -59,7 +59,7 @@ app.listen(3000, function(){
 	console.log("The frontend server is running on port 3000...");
 });
 
-// All images in categories route
+// Get all images in categories route
 app.get('/api/images', function(req, res){
   knex('images')
   .join('categories', 'images.categoryId', '=', 'categories.id')
@@ -69,16 +69,16 @@ app.get('/api/images', function(req, res){
   })
 });
 
-// All categories route
+// Get all categories route
 app.get('/api/categories', function(req, res){
   knex('categories')
-  .select()
+  .orderBy('id')
   .then(data => {
     res.send(data);
   })
 });
 
-// About text route
+// Get about text route
 app.get('/api/about', function(req, res){
   knex('about')
   .where('id', '=', 1)
@@ -89,7 +89,7 @@ app.get('/api/about', function(req, res){
   })
 });
 
-// All data route
+// Get all data route
 app.get('/api/data', function(req, res){
 
   var result = {}
@@ -114,7 +114,6 @@ app.get('/api/data', function(req, res){
     })
 
   })
-
 
   // knex('categories')
   // .then(categories => {
@@ -157,7 +156,6 @@ app.get('/api/data', function(req, res){
 
 
 });
-
 
 
 // ------------------------------------------------------- ADMIN
