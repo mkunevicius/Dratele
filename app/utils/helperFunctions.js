@@ -18,5 +18,6 @@ export function getFetchConfig(body, method) {
     method: method
     }
   }
+  console.log(config)
   return config
 }
