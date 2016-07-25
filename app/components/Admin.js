@@ -14,6 +14,7 @@ class Admin extends Component {
       showNewCategoryForm: false,
       showEditCategoryForm: false,
       editCategoryId: null,
+
     };
   }
 
@@ -68,31 +69,39 @@ class Admin extends Component {
           <div className='adminCategories'>
             <h2>CATEGORIES:</h2>
 
-            <div onClick={()=>{this.setState({
+            <div className='buttonAddNew' onClick={()=>{this.setState({
                 showNewCategoryForm:!this.state.showNewCategoryForm,
                 categoryName:'',
                 editCategoryId:null
               })}}>
-              Add new category
+              + Add new category
             </div>
             {this.state.showNewCategoryForm && <div>{this.renderCategoryForm()}</div>}
+
 
             {this.state.categories.map((cat, i) => {
               let images = this.state.images.filter(img => img.categoryId === cat.id)
               return <div key={i}>
-                <h3 className='catName'>{cat.name}</h3>
-                <div onClick={()=>{this.editCategory(cat.id, cat.name)}}>
-                  edit
-                </div>
-                <div onClick={()=>{this.deleteCategory(cat.id)}}>
-                  delete
-                </div>
-
-                {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id && <div>{this.renderCategoryForm()}</div>}
+                <h3 className='catName'>{cat.name}
+                  {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id && <div className='editField'>{this.renderCategoryForm()}</div>}
+                  <div className='button' onClick={()=>{this.editCategory(cat.id, cat.name)}}>
+                  Rename
+                  </div>
+                  <div className='button' onClick={()=>{this.deleteCategory(cat.id)}}>
+                  Delete category
+                  </div>
+                  <div className='button' onClick=''>
+                  + Add new photo
+                  </div>
+                </h3>
 
                 {images.map((img, j) =>
                   <div  className='thumbContainer' key={j}>
                     <img className='thumb' src={`/${img.imagePath}`} />
+                    <div className='thumb-overlay'>
+                      <span>{img.title}</span>
+                      <div className='buttonAddNew' onClick=''>Delete</div>
+                    </div>
                   </div>
                 )}
                 <hr/>
@@ -102,14 +111,17 @@ class Admin extends Component {
 
           <div className='adminAbout'>
             <h2>ABOUT:</h2>
-            <form>
-            <textarea className='field' value={this.state.about}></textarea>
-            <button
-              className='field'
+              <textarea
+                className='field'
+                value={this.state.about}
+                onChange={(e) => {this.handleAboutChange(e.target.value)}}>
+              </textarea>
+            <div
+              className='buttonAddNew'
               type='submit'
-              onSubmit={this.onUpdateAbout.bind(this)}
-              name='submit'>Update Text</button>
-            </form>
+              onClick={() => {this.onUpdateAbout()}}
+              >Update Text
+            </div>
           </div>
 
         </div>
@@ -138,7 +150,8 @@ class Admin extends Component {
         let index = this.state.categories.findIndex(el => el.id === cat.id)
         this.setState(
           Object.assign({}, this.state, {
-            categories: update(this.state.categories, {[[index]]: {$set: cat}})
+            categories: update(this.state.categories, {[[index]]: {$set: cat}}),
+            showEditCategoryForm: false
           })
         )
       })
@@ -174,15 +187,32 @@ class Admin extends Component {
       let index = this.state.categories.findIndex(el => el.id === id)
       this.setState(
         Object.assign({}, this.state, {
-          categories: update(this.state.categories, {$splice: [[index, 1]]})
+          categories: update(this.state.categories, {$splice: [[index, 1]]}),
         })
       )
     })
     .catch(err => console.log('Serv: ', err))
   }
 
-  onUpdateAbout() {
+  handleAboutChange(value) {
+    this.setState({about: value})
+  }
 
+  onUpdateAbout() {
+    fetch('/api/about', getFetchConfig({about:this.state.about}, 'POST'))
+    .then((response) => {
+      if (!response.ok) return Promise.reject(response.statusText)
+      return response.json()
+    })
+    .then(text => {
+      // let index = this.state.categories.findIndex(el => el.id === cat.id)
+      this.setState(
+        Object.assign({}, this.state, {
+          categories: update(this.state.about, {$set: text})
+        })
+      )
+    })
+    .catch(err => console.log('Serv: ', err))
   }
 
 
