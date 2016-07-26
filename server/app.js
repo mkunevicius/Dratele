@@ -158,12 +158,12 @@ app.get('/api/categories/delete/:id', function(req, res){
 });
 
 // Delete image route
-app.get('/api/images/delete/:imageId', function(req, res){
+app.get('/api/images/delete/:id', function(req, res){
   knex('images')
-  .where('id', req.params.imageId)
+  .where('id', req.params.id)
   .del()
   .then(
-    res.redirect('/api/admin')
+    res.send(JSON.stringify('ok'))
   );
 });
 
@@ -176,17 +176,17 @@ app.post('/api/images/new', upload.single('image'), function(req, res){
     categoryId: id
   })
   .then(
-    res.redirect('/api/admin')
+    res.send(JSON.stringify('ok'))
   );
 });
 
 // Update 'About' text route
-app.post('/api/about', function(req, res){
+app.put('/api/about', function(req, res){
   knex('about')
   .where('id', 1)
   .update({text: req.body.about})
   .then(
-    res.redirect('/api/admin')
+    res.send(JSON.stringify('ok'))
   );
 });
 

@@ -220,6 +220,7 @@ hr {
   cursor: pointer;
   border-radius: 2px;
   border: 1px solid #bbb;
+  font-family: 'Poiret One', 'Arial';
 }
 
 .button {

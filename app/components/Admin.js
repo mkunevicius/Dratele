@@ -13,11 +13,11 @@ class Admin extends Component {
       categoryName: '',
       showNewCategoryForm: false,
       showEditCategoryForm: false,
-      editCategoryId: null,
-
+      editCategoryId: null
     };
   }
 
+  // get all data from server
   componentDidMount() {
     fetch('/api/data', getFetchConfig(null, 'GET'))
     .then((response) => {
@@ -33,6 +33,7 @@ class Admin extends Component {
     })
   }
 
+  // if editing existing category name
   editCategory(id, name) {
     this.setState({
       categoryName:name,
@@ -41,6 +42,7 @@ class Admin extends Component {
     })
   }
 
+  // Input for add new / edit category
   renderCategoryForm() {
     return (
       <div>
@@ -51,16 +53,14 @@ class Admin extends Component {
           onChange={(e) => {this.handleCategoryChange(e.target.value)}}>
         </input>
         <button
-          className='field'
+          className='button'
           onClick={() => {this.submitCategory()}}>OK</button>
       </div>
     )
   }
 
   render() {
-
     console.log(this.state)
-
     return (
       <div className='main-container'>
         <h1 className='adminLogo'>DRATELE PHOTOGRAPHY admin panel</h1>
@@ -77,7 +77,6 @@ class Admin extends Component {
               + Add new category
             </div>
             {this.state.showNewCategoryForm && <div>{this.renderCategoryForm()}</div>}
-
 
             {this.state.categories.map((cat, i) => {
               let images = this.state.images.filter(img => img.categoryId === cat.id)
@@ -100,13 +99,17 @@ class Admin extends Component {
                     <img className='thumb' src={`/${img.imagePath}`} />
                     <div className='thumb-overlay'>
                       <span>{img.title}</span>
-                      <div className='buttonAddNew' onClick=''>Delete</div>
+                      <div className='buttonAddNew' onClick={() => {this.deleteImage(img.id)}}>
+                        Delete
+                      </div>
                     </div>
                   </div>
                 )}
+
                 <hr/>
               </div>
             })}
+
           </div>
 
           <div className='adminAbout'>
@@ -118,7 +121,6 @@ class Admin extends Component {
               </textarea>
             <div
               className='buttonAddNew'
-              type='submit'
               onClick={() => {this.onUpdateAbout()}}
               >Update Text
             </div>
@@ -129,18 +131,19 @@ class Admin extends Component {
     )
   }
 
+  // Category name input change handler
   handleCategoryChange(value) {
     this.setState({categoryName: value})
   }
 
+  // Add new / edit category
   submitCategory() {
+    // Edit category name
     if (this.state.editCategoryId) {
-
       let body = {
         id: this.state.editCategoryId,
         name: this.state.categoryName
       }
-
       fetch('/api/categories', getFetchConfig(body, 'PUT'))
       .then((response) => {
         if (!response.ok) return Promise.reject(response.statusText)
@@ -156,7 +159,7 @@ class Admin extends Component {
         )
       })
       .catch(err => console.log('Serv: ', err))
-
+      // Add new category
     } else {
       fetch('/api/categories', getFetchConfig({name:this.state.categoryName}, 'POST'))
       .then((response) => {
@@ -176,36 +179,60 @@ class Admin extends Component {
     }
   }
 
+  // Delete category
   deleteCategory(id) {
-    fetch(`/api/categories/delete/${id}`, getFetchConfig(null, 'GET'))
-    .then((response) => {
-      if (!response.ok) return Promise.reject(response.statusText)
-      return response.json()
-    })
-    .then(res => {
-      console.log(res)
-      let index = this.state.categories.findIndex(el => el.id === id)
-      this.setState(
-        Object.assign({}, this.state, {
-          categories: update(this.state.categories, {$splice: [[index, 1]]}),
-        })
-      )
-    })
-    .catch(err => console.log('Serv: ', err))
+    if (confirm('Ramune, do you really want to delete this image?')) {
+      fetch(`/api/categories/delete/${id}`, getFetchConfig(null, 'GET'))
+      .then((response) => {
+        if (!response.ok) return Promise.reject(response.statusText)
+        return response.json()
+      })
+      .then(res => {
+        console.log(res)
+        let index = this.state.categories.findIndex(el => el.id === id)
+        this.setState(
+          Object.assign({}, this.state, {
+            categories: update(this.state.categories, {$splice: [[index, 1]]})
+          })
+        )
+      })
+      .catch(err => console.log('Serv: ', err))
+    }
   }
 
+  // Delete image
+  deleteImage(id) {
+    if (confirm('Ramune, do you really want to delete this image?')) {
+      fetch(`/api/images/delete/${id}`, getFetchConfig(null, 'GET'))
+      .then((response) => {
+        if (!response.ok) return Promise.reject(response.statusText)
+        return response.json()
+      })
+      .then(res => {
+        let index = this.state.images.findIndex(el => el.id === id)
+        this.setState(
+          Object.assign({}, this.state, {
+            images: update(this.state.images, {$splice: [[index, 1]]})
+          })
+        )
+      })
+      .catch(err => console.log('Serv: ', err))
+    }
+  }
+
+  // 'About' input change handler
   handleAboutChange(value) {
     this.setState({about: value})
   }
 
+  // Update 'About' text
   onUpdateAbout() {
-    fetch('/api/about', getFetchConfig({about:this.state.about}, 'POST'))
+    fetch('/api/about', getFetchConfig({about:this.state.about}, 'PUT'))
     .then((response) => {
       if (!response.ok) return Promise.reject(response.statusText)
       return response.json()
     })
     .then(text => {
-      // let index = this.state.categories.findIndex(el => el.id === cat.id)
       this.setState(
         Object.assign({}, this.state, {
           categories: update(this.state.about, {$set: text})
@@ -215,8 +242,6 @@ class Admin extends Component {
     .catch(err => console.log('Serv: ', err))
   }
 
-
-
-}
+} // end class Admin Component
 
 export default Admin
