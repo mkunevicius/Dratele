@@ -33,11 +33,14 @@ var upload = multer({ storage : storage });
 app.use(express.static(__dirname + '/public'));
 // Use body-parser - Express middleware for routes to access req.body
 app.use(bodyParser.json());
+
 // Cookie parser
 // app.use(cookieParser('shhhh, very secret'));
-// // Backend session
+
+// Backend session
 // app.use(session());
-// // Get username from session
+
+// Get username from session
 // app.use(function(req, res, next) {
 //   if (req.session.user) res.locals.username = req.session.user.username;
 //   next();
@@ -67,7 +70,7 @@ app.get('/api/categories', function(req, res){
   })
 });
 
-// Get about text route
+// Get about route
 app.get('/api/about', function(req, res){
   knex('about')
   .where('id', '=', 1)
@@ -78,56 +81,96 @@ app.get('/api/about', function(req, res){
   })
 });
 
+// ------------------------------------------------------- LOGIN
+
+// // Authenticate user & password
+// function authenticate(name, pass, fn) {
+//   connection.query('SELECT * FROM users WHERE username=?', [name], function(err, rows){
+//     let user = rows[0];
+//     if (!user) return fn(new Error('cannot find user'));
+//     bcrypt.compare(pass, user.hash, function(err, res) {
+//       if (err) return fn(err);
+//       if (res) {
+//         return fn(null, user);
+//       } else {
+//         fn(new Error('invalid password'));
+//       }
+//     });
+//   });
+// }
+//
+// // Login submit route
+// app.post('/login', function(req, res){
+//   authenticate(req.body.username, req.body.password, function(err, user){
+//     if (user) {
+//       console.log('welcome!')
+//       req.session.regenerate(function(){
+//         req.session.user = user;
+//         res.redirect('/api/projects');
+//       });
+//     } else {
+//       console.log('wrong username and/or password!')
+//       // res.redirect('/login');
+//     }
+//   });
+// });
+//
+// // Enter restricted Admin area route
+// app.all('/api/admin/*', function(req, res, next){
+//   console.log('Accessing admin area...');
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     req.session.error = 'Access denied!';
+//     // res.redirect('/login');
+//   }
+// });
+//
+// // Logout route
+// app.get('/logout', function(req, res){
+//   // destroy the user's session to log them out
+//   // will be re-created next request
+//   req.session.destroy(function(){
+//     // res.redirect('/login');
+//   });
+// });
+
 // ------------------------------------------------------- ADMIN
 
-// Get all data route
-app.get('/api/data', function(req, res){
+// Get categories to admin route
+app.get('/api/admin/categories', function(req, res){
   var result = {}
   knex('categories')
   .orderBy('id')
   .then(categories => {
     result.categories = categories
-    knex('images')
-    .then(images => {
-      result.images = images
-      knex('about').where('id', 1).first('text')
-      .then(about => {
-        result.about = about
-        res.send(result)
-      })
-    })
-  })
+    res.send(result)
+  });
+});
 
-  // knex('categories')
-  // .then(categories => {
-  //     var result = []
-  //     var promises = []
-  //     categories.forEach(category => {
-  //       var promise = new Promise((resolve, reject) => {
-  //         knex('images')
-  //         .where('categoryId', category.id)
-  //         .then(images => {
-  //           category.images = images
-  //           result.push(category)
-  //           console.log('result', result)
-  //         })
-  //         resolve(result)
-  //       })
-  //       promises.push(promise)
-  //     })
-  //     Promise.all(promises).then(res => {
-  //       console.log('res', res)
-  //     })
-  //   })
-  // promise.then(res => {
-  //   console.log(res)
-  //   //res.send(result);
-  // })
+// Get images to admin route
+app.get('/api/admin/images/:categoryId', function(req, res){
+  var result = {}
+  knex('images')
+  .where('categoryId', req.params.categoryId)
+  .then(images => {
+    result.images = images
+    res.send(result)
+  });
+});
 
+// Get about to admin route
+app.get('/api/admin/about', function(req, res){
+  var result = {}
+  knex('about').where('id', 1).first('text')
+  .then(about => {
+    result.about = about
+    res.send(result)
+  });
 });
 
 // Add new category route
-app.post('/api/categories', function(req, res){
+app.post('/api/admin/categories', function(req, res){
   knex('categories')
   .insert({name: req.body.name})
   .then((ids) => {
@@ -137,7 +180,7 @@ app.post('/api/categories', function(req, res){
 });
 
 // Rename category route
-app.put('/api/categories', function(req, res){
+app.put('/api/admin/categories', function(req, res){
   let cat = req.body
   knex('categories')
   .where('id', req.body.id)
@@ -148,7 +191,7 @@ app.put('/api/categories', function(req, res){
 });
 
 // Delete category route
-app.get('/api/categories/delete/:id', function(req, res){
+app.get('/api/admin/categories/delete/:id', function(req, res){
   knex('categories')
   .where('id', req.params.id)
   .del()
@@ -158,7 +201,7 @@ app.get('/api/categories/delete/:id', function(req, res){
 });
 
 // Delete image route
-app.get('/api/images/delete/:id', function(req, res){
+app.get('/api/admin/images/delete/:id', function(req, res){
   knex('images')
   .where('id', req.params.id)
   .del()
@@ -168,7 +211,7 @@ app.get('/api/images/delete/:id', function(req, res){
 });
 
 // Add new image to category route
-app.post('/api/images/new', upload.single('image'), function(req, res){
+app.post('/api/admin/images/new', upload.single('image'), function(req, res){
   knex('images')
   .insert({
     title: req.file.filename,
@@ -181,7 +224,7 @@ app.post('/api/images/new', upload.single('image'), function(req, res){
 });
 
 // Update 'About' text route
-app.put('/api/about', function(req, res){
+app.put('/api/admin/about', function(req, res){
   knex('about')
   .where('id', 1)
   .update({text: req.body.about})

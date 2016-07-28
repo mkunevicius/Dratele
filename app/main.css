@@ -101,6 +101,42 @@ h1 {
   position: fixed !important;
 }
 
+/*.facebookButton {
+  position: fixed;
+  margin-left: 2vw;
+  margin-top: 48%;
+}
+
+.twitterButton {
+  position: fixed;
+  margin-left: 4vw;
+  margin-top: 48%;
+}*/
+
+/* --------------------------------------------- LIGHTBOX */
+
+.shade {
+  position: fixed;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.88);
+  top:0;
+  bottom: 0;
+  left:0;
+  right: 0;
+  z-index: 99;
+}
+
+.lightboxImage {
+  display: block;
+  z-index: 200;
+  margin: 10vh auto;
+  max-height: 80vh;
+  max-width: 80vw;
+  border: 1px solid #444;
+}
+
+/* -------------------------------- ABOUT, CONTACT, LOGIN */
+
 .about, .contact, .login {
   width: 30%;
   margin: 12% auto;
@@ -116,21 +152,9 @@ h1 {
   color: #aaa;
 }
 
-.facebookButton {
-  position: fixed;
-  margin-left: 2vw;
-  margin-top: 48%;
-}
-
-.twitterButton {
-  position: fixed;
-  margin-left: 4vw;
-  margin-top: 48%;
-}
-
 .login form input,
 .login form button {
-  padding: 5px;
+  padding: 5px 30px;
   margin: 5px;
   font-size: .9em;
   display: inline-block;
@@ -141,14 +165,25 @@ h1 {
 /* ----------------------------------------------- ADMIN */
 
 .adminLogo {
-  position: relative;
+  position: fixed;
+  margin: -10px;
+  padding: 25px 0 2vh 3vw;
+  width: 100%;
+  background: rgba(11, 11, 11, 1);
+  z-index: 300;
+}
+
+.adminLogo p {
+  font-size: 14px;
+  float: right;
+  margin-top: 25px;
+  margin-right: 75px;
 }
 
 .admin {
-  position: relative;
+  position: absolute;
   width: 90%;
-  margin-top: 50px;
-  margin-left: 2vw;
+  margin: 120px 2vw 50px;
   background: rgba(255, 255, 255, .9);
   padding: 2vw;
   border-radius: 5px;
@@ -168,8 +203,9 @@ h1 {
   min-height: 10vw;
 }
 
-h3 {
-  margin: 30px 0 2px;
+h3.catName {
+  display: inline-block;
+  margin: 30px 10px 2px 5px;
 }
 
 .thumbContainer {
@@ -212,7 +248,7 @@ hr {
   border: none;
 }
 
-.button, .buttonAddNew {
+.button, .buttonAdd {
   display: inline-block;
   padding: 4px;
   font-size: 14px;
@@ -221,19 +257,31 @@ hr {
   border-radius: 2px;
   border: 1px solid #bbb;
   font-family: 'Poiret One', 'Arial';
+  margin: 5px;
 }
 
-.button {
-  margin: 0 5px 5px 5px;
+.buttonAdd {
+  margin-bottom: 15px;
 }
 
-.buttonAddNew {
-  margin: 0 5px 15px 0;
-}
-
-.button:hover, .buttonAddNew:hover {
+.button:hover, .addNewPhoto:hover, .buttonAdd:hover {
   background: #aaa;
   color: #222;
+  cursor: pointer;
+}
+
+.addNewPhoto {
+  position: relative;
+  z-index: 100;
+  top: -8px;
+  display: inline-block;
+  background: #ccc;
+  padding: 52px 4px 4px;
+  margin: 5px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 2px;
 }
 
 .editField {
@@ -247,35 +295,37 @@ hr {
 @media screen and (max-width: 777px) and (orientation:landscape) {
 
   .navigation, .categories {
-    margin-top: 55px;
+    display: none;
   }
 
-  .navigation div, .categories div {
-    font-size: 1.5vw;
-  }
-
-  .scroll {
-    margin-top: 95px;
+  .scrollContainer {
+    margin-top: 10px;
   }
 
   .imageContainer {
     height: 38vw;
   }
 
-  .catName {
-    width: 300px;
+  .about, .contact, .login {
+    width: 80%;
+    margin: 5% auto;
   }
 
 }
 
 @media screen and (max-width: 450px) and (orientation:portrait) {
 
-  .navigation div, .categories div {
-    font-size: 2vw;
+  .navigation, .categories {
+    display: none;
   }
 
   .imageContainer {
     height: 50vw;
+  }
+
+  .about, .contact, .login {
+    width: 80%;
+    margin: 30% auto;
   }
 
 }
