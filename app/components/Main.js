@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import '../main.css'
-import Categories from '../components/Categories'
+import Categories from './Categories'
 
 class Main extends Component {
   render() {
     return (
 
       <div className='main-container'>
-        <h1>DRATELE PHOTOGRAPHY</h1>
+        <h1 className='logo'>DRATELE PHOTOGRAPHY</h1>
         <Categories />
 
         <ReactCSSTransitionGroup

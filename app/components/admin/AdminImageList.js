@@ -30,14 +30,14 @@ export default class AdminImageList extends Component {
     return (
       <div>
         <div className='thumbContainer'>
-          <div className='addNewPhoto'>+ Add new photo</div>
+          <div className='addNewPhoto'><p>+ Add new photo</p></div>
         </div>
         {this.state.images.map((img, j) =>
           <div  className='thumbContainer' key={j}>
             <img className='thumb' src={`/${img.imagePath}`} />
             <div className='thumb-overlay'>
               <span>{img.title}</span>
-              <div className='buttonAddNew' onClick={() => {this.deleteImage(img.id)}}>
+              <div className='buttonAdd' onClick={() => {this.deleteImage(img.id)}}>
                 Delete
               </div>
             </div>

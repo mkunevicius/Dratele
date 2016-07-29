@@ -27,11 +27,13 @@
     "react-addons-update": "^15.2.1",
     "react-classset": "0.0.2",
     "react-dom": "^15.2.1",
+    "react-icons": "^2.2.1",
     "react-images": "^0.4.6",
     "react-motion": "^0.4.4",
     "react-router": "^2.5.2",
     "react-scroll-horizontal": "0.0.7",
     "react-share": "^1.8.4",
+    "react-simple-dropdown": "^1.1.4",
     "sass-loader": "^3.2.3",
     "webpack-hot-middleware": "^2.12.1"
   },

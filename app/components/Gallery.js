@@ -38,7 +38,10 @@ class Gallery extends Component {
         </HorizontalScroll>
 
         {this.state.lightboxImage &&
-        <div className='shade' onClick={() => {this.closeLightbox()}}>
+        <div
+          className='shade'
+          onClick={() => {this.closeLightbox()}}
+          onContextMenu={this.onContextMenu}>
           <img className='lightboxImage' src={this.state.lightboxImage} />
         </div>}
 
@@ -49,23 +52,3 @@ class Gallery extends Component {
 }
 
 export default Gallery
-
-
-
-
-
-
-// {this.state.lightboxIsOpen && images[this.state.currentImage] &&
-//
-//                     <div className="lightbox">
-//
-//                         <div className="arrow close" onClick = {this.closeLightbox}>✕</div>
-//                         <div className="arrow arrowRight" onClick = {this.gotoPrevious}>➔</div>
-//                         <div className="lightboxImage">
-//                             <img className="image" src={images[this.state.currentImage].src}/>
-//                         </div>
-//                         <div className="arrow arrowLeft" onClick = {this.gotoNext}>➔</div>
-//                         <div className="shade" onClick = {this.closeLightbox}></div>
-//                     </div>
-//
-//                 }

@@ -1,7 +1,3 @@
-* {
-  /*border: 1px solid #ccc;*/
-}
-
 /*--------------------------------------- TRANSITIONS */
 
 .appear-enter {
@@ -70,7 +66,7 @@ a {
 
 .imageContainer {
   display: inline-block;
-  height: 40vw;
+  height: 66vh;
   width: auto;
 }
 
@@ -85,8 +81,8 @@ a {
   border: 1px solid #444;
 }
 
-h1 {
-  margin: 2vw;
+.logo {
+  margin: 4vh 2vw;
   color: #aaa;
   font-size: 2.5em;
 }
@@ -160,30 +156,62 @@ h1 {
   display: inline-block;
   background-color: #eee;
   border: none;
+  font-family: 'Poiret One', 'Arial';
+}
+
+/* ----------------------------------------------- DROPDOWN */
+
+.dropdown {
+  display: none;
+  position: fixed;
+  z-index: 100;
+}
+
+.dropdown--active .dropdown__content {
+  display: block;
+  padding: 4px;
+  background: rgba(238, 238, 238, .9);
+  border-radius: 2px;
+}
+
+.dropdown svg {
+  width: 35px;
+  height: auto;
+}
+
+.dropdown__content {
+  display: none;
+  position: absolute;
+}
+
+.dropdownHide {
+  display: none !important;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+}
+
+ul a {
+  padding: 5px;
+  line-height: 1.6;
 }
 
 /* ----------------------------------------------- ADMIN */
 
-.adminLogo {
-  position: fixed;
-  margin: -10px;
-  padding: 25px 0 2vh 3vw;
-  width: 100%;
-  background: rgba(11, 11, 11, 1);
-  z-index: 300;
-}
-
-.adminLogo p {
+.logo p {
   font-size: 14px;
   float: right;
+  margin-right: 1vw;
   margin-top: 25px;
-  margin-right: 75px;
 }
 
 .admin {
   position: absolute;
   width: 90%;
-  margin: 120px 2vw 50px;
+  margin: 15px 2vw 50px;
   background: rgba(255, 255, 255, .9);
   padding: 2vw;
   border-radius: 5px;
@@ -211,6 +239,7 @@ h3.catName {
 .thumbContainer {
   display: inline-flex;
   position: relative;
+  margin-bottom: -23px;
 }
 
 .thumb {
@@ -221,7 +250,7 @@ h3.catName {
 
 .thumb-overlay {
 	position: absolute;
-	top: 30px;
+	top: 25px;
 	right: 0;
 	bottom: 0;
 	left: 20px;
@@ -273,15 +302,21 @@ hr {
 .addNewPhoto {
   position: relative;
   z-index: 100;
-  top: -8px;
+  top: -22px;
   display: inline-block;
   background: #ccc;
-  padding: 52px 4px 4px;
+  padding: 25px 4px 4px;
   margin: 5px;
+  margin-top: 30px;
   text-align: center;
   font-size: 14px;
   border: 1px solid #bbb;
   border-radius: 2px;
+}
+.addNewPhoto p {
+  display: block;
+  position: relative;
+  top: -12px;
 }
 
 .editField {
@@ -294,8 +329,28 @@ hr {
 
 @media screen and (max-width: 777px) and (orientation:landscape) {
 
+  .dropdown {
+    display: inline-block;
+    top: 12px;
+    right: 3vw;
+  }
+
+  .dropdown--active .dropdown__content {
+    right: 5px;
+  }
+
   .navigation, .categories {
     display: none;
+  }
+
+  .logo {
+    font-size: 2em;
+  }
+
+  .admin textarea {
+    margin-right: 0;
+    width: 98%;
+    height: 15vh;
   }
 
   .scrollContainer {
@@ -303,29 +358,63 @@ hr {
   }
 
   .imageContainer {
-    height: 38vw;
+    height: 65vh;
   }
 
   .about, .contact, .login {
     width: 80%;
-    margin: 5% auto;
+    margin: 7% auto;
+    text-shadow: 1px 1px 5px #000;
+  }
+
+  .logo p {
+    margin-top: 18px;
+    margin-right: 25px;
   }
 
 }
 
 @media screen and (max-width: 450px) and (orientation:portrait) {
 
+  .dropdown {
+    display: inline-block;
+    top: 85px;
+    left: 3vw;
+  }
+
+  .dropdown--active .dropdown__content {
+    left: 5px;
+    font-size: 20px;
+  }
+
   .navigation, .categories {
     display: none;
   }
 
   .imageContainer {
-    height: 50vw;
+    height: 30vh;
   }
 
   .about, .contact, .login {
     width: 80%;
-    margin: 30% auto;
+    margin: 35% auto;
+  }
+
+  .logo {
+    margin-top: 10px;
+    font-size: 2em;
+    width: 300px;
+  }
+
+  .admin textarea {
+    margin-right: 0;
+    width: 98%;
+    height: 15vh;
+  }
+
+  .logo p {
+    margin-top: 10px;
+    float: left;
   }
 
 }

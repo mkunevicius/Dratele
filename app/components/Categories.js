@@ -2,6 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import {getFetchConfig} from '../utils/helperFunctions';
 import ReactRouter, {Link} from 'react-router';
 import classnames from 'classnames';
+import Dropdown, { DropdownTrigger, DropdownContent } from 'react-simple-dropdown'
+import '../main.css'
+import MobileNav from 'react-icons/lib/io/navicon-round';
 
 class Categories extends Component {
 
@@ -9,7 +12,8 @@ class Categories extends Component {
     super();
     this.state = {
       categories: [],
-      activeItem: window.location.pathname
+      activeItem: window.location.pathname,
+      dropdownOpen: false
     };
   }
 
@@ -28,15 +32,22 @@ class Categories extends Component {
   }
 
   handleClick(path) {
-    this.setState({ activeItem: path});
+    this.setState({ activeItem: path });
   }
 
+  onSelectDropdown() {
+    this.setState({dropdownOpen: false})
+  }
 
   render() {
 
     let homeClasses = classnames('menuItem');
     let contactClasses = classnames('menuItem');
     let aboutClasses = classnames('menuItem');
+    let dropdownClasses = classnames('dropdown--active');
+
+    if (this.state.dropdownOpen === false)
+      dropdownClasses = classnames({'dropdown--active': false});
 
     if (this.state.activeItem === '/')
       homeClasses = classnames('menuItem', {active: true});
@@ -50,14 +61,44 @@ class Categories extends Component {
     return (
       <div className='main-container'>
 
+        <Dropdown className={dropdownClasses}>
+          <DropdownTrigger><MobileNav /></DropdownTrigger>
+          <DropdownContent>
+            <ul onClick={() => {this.onSelectDropdown()}}>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+            </ul>
+            <hr/>
+            <ul>
+              {this.state.categories.map((cat, i) => {
+                let catClasses = classnames('menuItem', {
+                  active: this.state.activeItem === `/gallery/${cat.name}`
+                });
+                return <li><Link key={i} to={`/gallery/${cat.name}`}
+                    onClick={this.handleClick.bind(this, `/gallery/${cat.name}`)}
+                    type='button'
+                    >
+                    {cat.name}
+                </Link></li>
+              })}
+            </ul>
+          </DropdownContent>
+        </Dropdown>
+
+
         <div className='categories'>
 
           {this.state.categories.map((cat, i) => {
-
             let catClasses = classnames('menuItem', {
               active: this.state.activeItem === `/gallery/${cat.name}`
             });
-
             return <Link key={i} to={`/gallery/${cat.name}`}
                 className={catClasses}
                 onClick={this.handleClick.bind(this, `/gallery/${cat.name}`)}
@@ -65,7 +106,6 @@ class Categories extends Component {
                 >
                 {cat.name}
             </Link>
-
           })}
 
         </div>

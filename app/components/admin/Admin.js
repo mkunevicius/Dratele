@@ -14,11 +14,12 @@ class Admin extends Component {
       categoryName: '',
       showNewCategoryForm: false,
       showEditCategoryForm: false,
-      editCategoryId: null
+      editCategoryId: null,
+      showRename: true
     };
   }
 
-  // get all data from server
+  // get all categories server
   componentDidMount() {
     fetch('/api/admin/categories', getFetchConfig(null, 'GET'))
     .then((response) => {
@@ -35,25 +36,38 @@ class Admin extends Component {
   // if editing existing category name
   editCategory(id, name) {
     this.setState({
-      categoryName:name,
-      showEditCategoryForm:!this.state.showEditCategoryForm,
-      editCategoryId:id,
+      categoryName: name,
+      showEditCategoryForm: !this.state.showEditCategoryForm,
+      editCategoryId: id,
+      showRename: false
     })
   }
 
-  // Input for add new / edit category
+  // on cancel
+  cancelSubmitCategory() {
+    this.setState({
+      showNewCategoryForm: false,
+      showEditCategoryForm: false,
+      showRename: true
+     })
+  }
+
+  // Input field for add new / edit category
   renderCategoryForm() {
     return (
       <div>
         <input
           className='field'
-          placeholder='Create new category'
+          placeholder='Enter category name'
           value={this.state.categoryName}
           onChange={(e) => {this.handleCategoryChange(e.target.value)}}>
         </input>
-        <button
+        <div
           className='button'
-          onClick={() => {this.submitCategory()}}>OK</button>
+          onClick={() => {this.submitCategory()}}>OK</div>
+        <div
+          className='button'
+          onClick={() => {this.cancelSubmitCategory()}}>Cancel</div>
       </div>
     )
   }
@@ -62,8 +76,8 @@ class Admin extends Component {
     console.log(this.state)
     return (
       <div className='main-container'>
-        <h1 className='adminLogo'>DRATELE PHOTOGRAPHY admin
-          <p>Logged in as: </p>
+        <h1 className='logo'>DRATELE PHOTOGRAPHY
+          <p>Logged in as: dratele</p>
         </h1>
         <div className='admin'>
           <div className='adminCategories'>
@@ -76,16 +90,19 @@ class Admin extends Component {
               })}}>
               + Add new category
             </div>
+
             {this.state.showNewCategoryForm && <div>{this.renderCategoryForm()}</div>}
             {this.state.categories.map((cat, i) => {
               return <div key={i}>
 
                 <div>
                   <h3 className='catName'>{cat.name}</h3>
-                  {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id && <div className='editField'>{this.renderCategoryForm()}</div>}
+                  {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id &&
+                  <div className='editField'>{this.renderCategoryForm()}</div>}
+                  {this.state.showRename &&
                   <div className='button' onClick={()=>{this.editCategory(cat.id, cat.name)}}>
                   Rename
-                  </div>
+                  </div>}
                   <div className='button' onClick={()=>{this.deleteCategory(cat.id)}}>
                   Delete category
                   </div>
@@ -93,13 +110,10 @@ class Admin extends Component {
 
                 <AdminImageList categoryId={cat.id} />
                 <hr/>
-
               </div>
             })}
           </div>
-
           <AdminAbout />
-
         </div>
       </div>
     )
@@ -128,7 +142,8 @@ class Admin extends Component {
         this.setState(
           Object.assign({}, this.state, {
             categories: update(this.state.categories, {[[index]]: {$set: cat}}),
-            showEditCategoryForm: false
+            showEditCategoryForm: false,
+            showRename: true
           })
         )
       })
