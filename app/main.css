@@ -1,3 +1,5 @@
+
+
 /*--------------------------------------- TRANSITIONS */
 
 .appear-enter {
@@ -223,6 +225,7 @@ ul a {
   color: #444;
   font-family: 'Poiret One', 'Arial';
   padding: 4px;
+  margin-left: 5px;
 }
 
 .admin textarea {
@@ -234,6 +237,10 @@ ul a {
 h3.catName {
   display: inline-block;
   margin: 30px 10px 2px 5px;
+}
+
+.rename {
+  margin-top: 22px;
 }
 
 .thumbContainer {
@@ -282,6 +289,7 @@ hr {
   padding: 4px;
   font-size: 14px;
   background: #ccc;
+  color: #444;
   cursor: pointer;
   border-radius: 2px;
   border: 1px solid #bbb;
@@ -295,7 +303,7 @@ hr {
 
 .button:hover, .addNewPhoto:hover, .buttonAdd:hover {
   background: #aaa;
-  color: #222;
+  color: #000;
   cursor: pointer;
 }
 
@@ -326,6 +334,9 @@ hr {
 .adminAbout {
   margin-top: 50px;
 }
+
+
+/* --------------------------------------------- MEDIA QUERIES */
 
 @media screen and (max-width: 777px) and (orientation:landscape) {
 

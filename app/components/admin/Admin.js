@@ -14,8 +14,7 @@ class Admin extends Component {
       categoryName: '',
       showNewCategoryForm: false,
       showEditCategoryForm: false,
-      editCategoryId: null,
-      showRename: true
+      editCategoryId: null
     };
   }
 
@@ -38,8 +37,7 @@ class Admin extends Component {
     this.setState({
       categoryName: name,
       showEditCategoryForm: !this.state.showEditCategoryForm,
-      editCategoryId: id,
-      showRename: false
+      editCategoryId: id
     })
   }
 
@@ -48,14 +46,14 @@ class Admin extends Component {
     this.setState({
       showNewCategoryForm: false,
       showEditCategoryForm: false,
-      showRename: true
+      editCategoryId: null
      })
   }
 
   // Input field for add new / edit category
   renderCategoryForm() {
     return (
-      <div>
+      <div className='rename'>
         <input
           className='field'
           placeholder='Enter category name'
@@ -72,17 +70,29 @@ class Admin extends Component {
     )
   }
 
+  // on log out
+  logout() {
+    fetch('/logout', getFetchConfig(null, 'GET'))
+    .then((response) => {
+      if (!response.ok) return Promise.reject(response.statusText)
+      return response.json()
+    })
+    .then(
+      res.send('Logged Out')
+    )
+  }
+
   render() {
-    console.log(this.state)
     return (
       <div className='main-container'>
         <h1 className='logo'>DRATELE PHOTOGRAPHY
-          <p>Logged in as: dratele</p>
+          <p>Logged in as: dratele
+            <span className='button' onClick={()=>{this.logOut()}}> Log out</span>
+          </p>
         </h1>
         <div className='admin'>
           <div className='adminCategories'>
             <h2>CATEGORIES:</h2>
-
             <div className='buttonAdd' onClick={()=>{this.setState({
                 showNewCategoryForm:!this.state.showNewCategoryForm,
                 categoryName:'',
@@ -92,31 +102,35 @@ class Admin extends Component {
             </div>
 
             {this.state.showNewCategoryForm && <div>{this.renderCategoryForm()}</div>}
+            <hr />
             {this.state.categories.map((cat, i) => {
-              return <div key={i}>
+              return (
+                <div key={i}>
 
-                <div>
-                  <h3 className='catName'>{cat.name}</h3>
-                  {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id &&
-                  <div className='editField'>{this.renderCategoryForm()}</div>}
-                  {this.state.showRename &&
-                  <div className='button' onClick={()=>{this.editCategory(cat.id, cat.name)}}>
-                  Rename
-                  </div>}
-                  <div className='button' onClick={()=>{this.deleteCategory(cat.id)}}>
-                  Delete category
+                  <div>
+                    {(!this.state.editCategoryId || this.state.editCategoryId !== cat.id) &&
+                    <h3 className='catName'>{cat.name}</h3>}
+                    {this.state.showEditCategoryForm && this.state.editCategoryId === cat.id &&
+                    <div className='editField'>{this.renderCategoryForm()}</div>}
+                    {(!this.state.editCategoryId || this.state.editCategoryId !== cat.id) &&
+                    <div className='button' onClick={()=>{this.editCategory(cat.id, cat.name)}}>
+                    Rename
+                    </div>}
+                    <div className='button' onClick={()=>{this.deleteCategory(cat.id)}}>
+                    Delete category
+                    </div>
                   </div>
-                </div>
 
-                <AdminImageList categoryId={cat.id} />
-                <hr/>
-              </div>
+                  <AdminImageList categoryId={cat.id} />
+                  <hr />
+                </div>
+              ) // end return
             })}
           </div>
           <AdminAbout />
         </div>
       </div>
-    )
+    ) // end return
   }
 
   // Category name input change handler
@@ -143,7 +157,7 @@ class Admin extends Component {
           Object.assign({}, this.state, {
             categories: update(this.state.categories, {[[index]]: {$set: cat}}),
             showEditCategoryForm: false,
-            showRename: true
+            editCategoryId: null
           })
         )
       })
@@ -170,7 +184,7 @@ class Admin extends Component {
 
   // Delete category
   deleteCategory(id) {
-    if (confirm('Ramune, do you really want to delete this image?')) {
+    if (confirm('Ramune, do you really want to delete this category with all images?')) {
       fetch(`/api/admin/categories/delete/${id}`, getFetchConfig(null, 'GET'))
       .then((response) => {
         if (!response.ok) return Promise.reject(response.statusText)

@@ -3,7 +3,11 @@ var mysql = require ('mysql');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var SessionStore = require('express-mysql-session');
 var multer = require('multer');
+var bcrypt = require('bcrypt');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -14,6 +18,14 @@ var knex = require('knex')({
     database : 'Dratele'
   }
 });
+
+var options = {
+  host     : 'localhost',
+  port     : '8889',
+  user     : 'root',
+  password : 'root',
+  database : 'Dratele'
+}
 
 var app = express();
 
@@ -26,25 +38,79 @@ var storage = multer.diskStorage({
     callback(null, file.originalname);
   }
 });
-
 var upload = multer({ storage : storage });
 
 // Static server
 app.use(express.static(__dirname + '/public'));
+// Cookie parser
+app.use(cookieParser('secret'));
 // Use body-parser - Express middleware for routes to access req.body
 app.use(bodyParser.json());
-
-// Cookie parser
-// app.use(cookieParser('shhhh, very secret'));
-
 // Backend session
-// app.use(session());
+app.use(session({
+  secret: 'secret123',
+  cookie: {expires: false},
+  store: new SessionStore(options)
+}));
 
-// Get username from session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// // Get username from session
 // app.use(function(req, res, next) {
+//   console.log('1 req.session.user: : ', req.session.user)
 //   if (req.session.user) res.locals.username = req.session.user.username;
 //   next();
 // });
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    knex('users')
+    .where('username', username)
+    .then(data => {
+      let user = data[0];
+
+      //if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+
+      bcrypt.compare(password, user.hash, function(err, res) {
+        if (err) return done(null, false, { message: 'Incorrect password1.' });
+        if (res) {
+          console.log('user',user)
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+      })
+
+      //return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  console.log('user.id', user.Id)
+  done(null, user.Id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+function loggedIn(req, res, next){
+  console.log('req.user', req.isAuthenticated())
+  if (req.user) {
+    next();
+  } else {
+    console.log('Access denied!')
+  }
+}
+
 
 // Server running
 app.listen(3000, function(){
@@ -83,10 +149,12 @@ app.get('/api/about', function(req, res){
 
 // ------------------------------------------------------- LOGIN
 
-// // Authenticate user & password
+// Authenticate user & password
 // function authenticate(name, pass, fn) {
-//   connection.query('SELECT * FROM users WHERE username=?', [name], function(err, rows){
-//     let user = rows[0];
+//   knex('users')
+//   .where('username', name)
+//   .then(data => {
+//     let user = data[0];
 //     if (!user) return fn(new Error('cannot find user'));
 //     bcrypt.compare(pass, user.hash, function(err, res) {
 //       if (err) return fn(err);
@@ -95,50 +163,57 @@ app.get('/api/about', function(req, res){
 //       } else {
 //         fn(new Error('invalid password'));
 //       }
-//     });
-//   });
+//     })
+//   })
 // }
-//
-// // Login submit route
-// app.post('/login', function(req, res){
-//   authenticate(req.body.username, req.body.password, function(err, user){
-//     if (user) {
-//       console.log('welcome!')
-//       req.session.regenerate(function(){
-//         req.session.user = user;
-//         res.redirect('/api/projects');
-//       });
-//     } else {
-//       console.log('wrong username and/or password!')
-//       // res.redirect('/login');
-//     }
-//   });
-// });
-//
-// // Enter restricted Admin area route
+
+// Login submit route
+app.post('/api/login', passport.authenticate('local'), function(req, res){
+  console.log('welcome!', req.user)
+  res.send({result: 'OK'});
+
+  // authenticate(req.body.username, req.body.password, function(err, user){
+  //   if (user) {
+  //     console.log('welcome!')
+  //     req.session.regenerate(function(){
+  //       req.session.user = user;
+  //       console.log('2 req.session.user: ', req.session.user);
+  //       res.send({result: 'OK'});
+  //     });
+  //   } else {
+  //     res.send('error')
+  //     console.log('wrong username and/or password!')
+  //   }
+  // });
+});
+
+// Enter restricted Admin area route
 // app.all('/api/admin/*', function(req, res, next){
+//   console.log(req.user)
 //   console.log('Accessing admin area...');
+//   console.log('3 req.session.user: ', req.session.user);
 //   if (req.session.user) {
 //     next();
 //   } else {
 //     req.session.error = 'Access denied!';
-//     // res.redirect('/login');
+//     console.log('Access denied!')
 //   }
 // });
-//
-// // Logout route
-// app.get('/logout', function(req, res){
-//   // destroy the user's session to log them out
-//   // will be re-created next request
-//   req.session.destroy(function(){
-//     // res.redirect('/login');
-//   });
-// });
+
+// Logout route
+app.get('/logout', function(req, res){
+  // destroy the user's session to log them out
+  // will be re-created next request
+  req.session.destroy(function(){
+    res.send('OK')
+    console.log('Bye bye!')
+  });
+});
 
 // ------------------------------------------------------- ADMIN
 
 // Get categories to admin route
-app.get('/api/admin/categories', function(req, res){
+app.get('/api/admin/categories', loggedIn, function(req, res){
   var result = {}
   knex('categories')
   .orderBy('id')
@@ -149,7 +224,7 @@ app.get('/api/admin/categories', function(req, res){
 });
 
 // Get images to admin route
-app.get('/api/admin/images/:categoryId', function(req, res){
+app.get('/api/admin/images/:categoryId', loggedIn, function(req, res){
   var result = {}
   knex('images')
   .where('categoryId', req.params.categoryId)
@@ -160,7 +235,7 @@ app.get('/api/admin/images/:categoryId', function(req, res){
 });
 
 // Get about to admin route
-app.get('/api/admin/about', function(req, res){
+app.get('/api/admin/about', loggedIn, function(req, res){
   var result = {}
   knex('about').where('id', 1).first('text')
   .then(about => {
@@ -170,7 +245,7 @@ app.get('/api/admin/about', function(req, res){
 });
 
 // Add new category route
-app.post('/api/admin/categories', function(req, res){
+app.post('/api/admin/categories', loggedIn, function(req, res){
   knex('categories')
   .insert({name: req.body.name})
   .then((ids) => {
