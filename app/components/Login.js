@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { getFetchConfig } from '../utils/helperFunctions'
-import { hashHistory, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class Login extends Component {
   constructor() {
@@ -45,8 +45,8 @@ class Login extends Component {
       return response.json()
     })
     .then(data => {
-      console.log(data)
-      if (data.result === 'OK') {
+      if (data.success) {
+        localStorage.setItem('token', data.token)
         browserHistory.push('/admin')
       } else {
 

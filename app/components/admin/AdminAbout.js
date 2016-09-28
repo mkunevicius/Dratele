@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../../main.css'
-import { getFetchConfig } from '../../utils/helperFunctions'
+import { getProtectedFetchConfig } from '../../utils/helperFunctions'
 import update from 'react-addons-update'
 
 export default class AdminAbout extends Component {
@@ -13,7 +13,7 @@ export default class AdminAbout extends Component {
 
   // get about from server
   componentDidMount() {
-    fetch('/api/admin/about', getFetchConfig(null, 'GET'))
+    fetch('/api/admin/about', getProtectedFetchConfig(null, 'GET'))
     .then((response) => {
       if (!response.ok) return Promise.reject(response.statusText)
       return response.json()
@@ -26,7 +26,7 @@ export default class AdminAbout extends Component {
   }
 
   render() {
-    console.log(this.state)
+
     return (
       <div className='adminAbout'>
         <h2>ABOUT:</h2>
@@ -51,7 +51,7 @@ export default class AdminAbout extends Component {
 
   // Update 'About' text
   onUpdateAbout() {
-    fetch('/api/admin/about', getFetchConfig({about:this.state.about}, 'PUT'))
+    fetch('/api/admin/about', getProtectedFetchConfig({about:this.state.about}, 'PUT'))
     .then((response) => {
       if (!response.ok) return Promise.reject(response.statusText)
       return response.json()

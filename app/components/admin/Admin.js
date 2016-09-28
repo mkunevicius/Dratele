@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import '../../main.css'
-import { getFetchConfig } from '../../utils/helperFunctions'
+import { getProtectedFetchConfig } from '../../utils/helperFunctions'
 import update from 'react-addons-update'
+import { browserHistory } from 'react-router';
 import AdminImageList from './AdminImageList'
 import AdminAbout from './AdminAbout'
 
@@ -20,7 +21,7 @@ class Admin extends Component {
 
   // get all categories server
   componentDidMount() {
-    fetch('/api/admin/categories', getFetchConfig(null, 'GET'))
+    fetch('/api/admin/categories', getProtectedFetchConfig(null, 'GET'))
     .then((response) => {
       if (!response.ok) return Promise.reject(response.statusText)
       return response.json()
@@ -72,14 +73,18 @@ class Admin extends Component {
 
   // on log out
   logout() {
-    fetch('/logout', getFetchConfig(null, 'GET'))
-    .then((response) => {
-      if (!response.ok) return Promise.reject(response.statusText)
-      return response.json()
-    })
-    .then(
-      res.send('Logged Out')
-    )
+    localStorage.removeItem('token')
+    browserHistory.push('/login')
+
+    // fetch('/logout', getProtectedFetchConfig(null, 'GET'))
+    // .then((response) => {
+    //   if (!response.ok) return Promise.reject(response.statusText)
+    //   return response.json()
+    // })
+    // .then((response) => {
+    //   localStorage.removeItem('token')
+    //   browserHistory.push('/login')
+    // })
   }
 
   render() {
@@ -87,7 +92,7 @@ class Admin extends Component {
       <div className='main-container'>
         <h1 className='logo'>DRATELE PHOTOGRAPHY
           <p>Logged in as: dratele
-            <span className='button' onClick={()=>{this.logOut()}}> Log out</span>
+            <span className='button' onClick={()=>{this.logout()}}> Log out</span>
           </p>
         </h1>
         <div className='admin'>
@@ -146,7 +151,7 @@ class Admin extends Component {
         id: this.state.editCategoryId,
         name: this.state.categoryName
       }
-      fetch('/api/admin/categories', getFetchConfig(body, 'PUT'))
+      fetch('/api/admin/categories', getProtectedFetchConfig(body, 'PUT'))
       .then((response) => {
         if (!response.ok) return Promise.reject(response.statusText)
         return response.json()
@@ -164,7 +169,7 @@ class Admin extends Component {
       .catch(err => console.log('Serv: ', err))
       // Add new category
     } else {
-      fetch('/api/admin/categories', getFetchConfig({name:this.state.categoryName}, 'POST'))
+      fetch('/api/admin/categories', getProtectedFetchConfig({name:this.state.categoryName}, 'POST'))
       .then((response) => {
         if (!response.ok) return Promise.reject(response.statusText)
         return response.json()
@@ -185,7 +190,7 @@ class Admin extends Component {
   // Delete category
   deleteCategory(id) {
     if (confirm('Ramune, do you really want to delete this category with all images?')) {
-      fetch(`/api/admin/categories/delete/${id}`, getFetchConfig(null, 'GET'))
+      fetch(`/api/admin/categories/delete/${id}`, getProtectedFetchConfig(null, 'GET'))
       .then((response) => {
         if (!response.ok) return Promise.reject(response.statusText)
         return response.json()

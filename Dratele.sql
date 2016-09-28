@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:8889
--- Generation Time: Sep 07, 2016 at 01:43 PM
+-- Generation Time: Sep 28, 2016 at 08:44 PM
 -- Server version: 5.5.42
 -- PHP Version: 7.0.0
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `Dratele`
 --
+CREATE DATABASE IF NOT EXISTS `Dratele` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `Dratele`;
 
 -- --------------------------------------------------------
 
@@ -36,7 +38,7 @@ CREATE TABLE `about` (
 --
 
 INSERT INTO `about` (`id`, `text`) VALUES
-(1, 'Here goes some text about Dratele. Here goes some text about Dratele. Here goes some text about Dratele. Here goes some text about Dratele. Here goes some text about Dratele.');
+(1, 'Dratelės pasaulis tvėrėsi iš raudonai apšviestos vonios ir tėvo ryškinamų nuotraukų – pamėkliškai, iš lėto ryškėjančių juodai-baltų vaizdinių. O vėliau buvo senelio zenitas ir bandymas pačiai užčiuopti, pagauti juodai-baltą dratelės pasaulį. Dar vėliau atsirado spalvų – iš sapnų ir fantazijų. Šešėliais, keistom formom, maumais po truputėli buvo apgyvendinas Dratelės pasaulis. Viskas čia įgauna hipnotizuojančią iliuziją, kuri pričiumpa ir sukausto žvilgsnį – prie vėjyje besiplaikstančių skalbinių, prie erdvėje dratiškai, it pamėkliški maumukai, išsidėsčiusių daiktų, pastatų, žmonių, muzikos. Dratelės fotografija, radusis iš Dratelės pasaulio, pagaliau įsikuria „darksaido“ namuose.');
 
 -- --------------------------------------------------------
 

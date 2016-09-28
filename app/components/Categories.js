@@ -81,7 +81,7 @@ class Categories extends Component {
                 let catClasses = classnames('menuItem', {
                   active: this.state.activeItem === `/gallery/${cat.name}`
                 });
-                return <li><Link key={i} to={`/gallery/${cat.name}`}
+                return <li key={i}><Link to={`/gallery/${cat.name}`}
                     onClick={this.handleClick.bind(this, `/gallery/${cat.name}`)}
                     type='button'
                     >
